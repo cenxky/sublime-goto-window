@@ -85,7 +85,14 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
             end tell
         """
 
-        Popen(['/usr/bin/osascript', "-e", cmd], stdout=PIPE, stderr=PIPE)
+        p = Popen(['/usr/bin/osascript', "-e", cmd], stdout=PIPE, stderr=PIPE)
+        output, error = p.communicate()
+        if p.returncode != 0:
+            print(error)
+            message = ("Accessibility is disalbed for Sublime Text. "
+                       "Please enable it in \"System Preferences > Security & Privacy > Accessibility\". "
+                       "Click OK to switch Window.")
+            sublime.error_message(message)
 
     # Focus a Sublime window using wmctrl. wmctrl takes the title of the window
     # that will be focused, or part of it.
