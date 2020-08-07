@@ -6,14 +6,14 @@ in them and you want to switch without having to press `command ~` over and over
 
 ## To Install
 
-If you are using Sublime Package Control you can press ``command+shift+p``.  Then select ``Package Control: Install Package`` and choose ``GotoWindow``.
+Use git to download this plugin (this is the OS X version):
 
-Another option is running the following command (this is the OS X version):
+```bash
+$ cd ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
+$ git clone git@github.com:cenxky/sublime-goto-window.git GotoWindow
+```
 
-```
-cd ~/Library/Application\ Support/Sublime\ Text\ 3/Packages
-git clone git@github.com:ccampbell/sublime-goto-window.git GotoWindow
-```
+**Note:** You need to enable `Accessibility` for Sublime Text in `Security & Privacy` of `System Preferences` if your computer platform is Mac OS.
 
 ### Linux dependencies
 

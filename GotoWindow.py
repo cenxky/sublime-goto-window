@@ -56,25 +56,34 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
             window_to_move_to.focus_group(active_group)
 
     def _osx_focus(self):
-        name = 'Sublime Text'
-        if int(sublime.version()) < 3000:
-            name = 'Sublime Text 2'
+        # name = 'Sublime Text'
+        # if int(sublime.version()) < 3000:
+        #     name = 'Sublime Text 2'
 
-        # This is some magic. I spent many many hours trying to find a
-        # workaround for the Sublime Text bug. I found a bunch of ugly
-        # solutions, but this was the simplest one I could figure out.
-        #
-        # Basically you have to activate an application that is not Sublime
-        # then wait and then activate sublime. I picked "Dock" because it
-        # is always running in the background so it won't screw up your
-        # command+tab order. The delay of 1/60 of a second is the minimum
-        # supported by Applescript.
+        # # This is some magic. I spent many many hours trying to find a
+        # # workaround for the Sublime Text bug. I found a bunch of ugly
+        # # solutions, but this was the simplest one I could figure out.
+        # #
+        # # Basically you have to activate an application that is not Sublime
+        # # then wait and then activate sublime. I picked "Dock" because it
+        # # is always running in the background so it won't screw up your
+        # # command+tab order. The delay of 1/60 of a second is the minimum
+        # # supported by Applescript.
+        # cmd = """
+        #     tell application "System Events"
+        #         activate application "Dock"
+        #         delay 1/60
+        #         activate application "%s"
+        #     end tell""" % name
+
+        # The solution of above can't work properly, so we use `command+tab` to replace it.
         cmd = """
             tell application "System Events"
-                activate application "Dock"
+                keystroke tab using command down
                 delay 1/60
-                activate application "%s"
-            end tell""" % name
+                keystroke tab using command down
+            end tell
+        """
 
         Popen(['/usr/bin/osascript', "-e", cmd], stdout=PIPE, stderr=PIPE)
 
